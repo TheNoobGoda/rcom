@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
         n++;
     }
     printf("%s \n",buf);
-    sleep(2);
+    sleep(0.5);
 
     int bytes = write(fd, buf, n);
 

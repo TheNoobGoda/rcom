@@ -23,6 +23,7 @@
 
 volatile int STOP = FALSE;
 
+
 int main(int argc, char *argv[])
 {
     // Program usage: Uses either COM1 or COM2
@@ -102,8 +103,9 @@ int main(int argc, char *argv[])
     // The whole buffer must be sent even with the '\n'.
     //buf[5] = '\n';
 
-    char c =getchar();
+    //char c =getchar();
     int n =0;
+    /*
     while (c!= '\n')
     {
         buf[n] = c;
@@ -111,8 +113,16 @@ int main(int argc, char *argv[])
         n++;
         if (n == BUF_SIZE) break;   
     }
-    n++;
+    */
+    buf[0] = 'f';
+    buf[1] = 'a';
+    buf[2] = 'c';
+    buf[3] = 'b';
+    buf[4] = 'f';
+    n = 5;
     buf[n] = '\0';
+    n++;
+    printf("%s \n",buf);
 
     int bytes = write(fd, buf, n);
 
@@ -136,7 +146,7 @@ int main(int argc, char *argv[])
         n++;
     }
 
-    printf("%s",buf);
+    printf("%s \n",buf);
 
     // Restore the old port settings
     if (tcsetattr(fd, TCSANOW, &oldtio) == -1)
