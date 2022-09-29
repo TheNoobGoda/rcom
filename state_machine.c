@@ -1,9 +1,6 @@
 #include <stdio.h>
 
-int state_machine(unsigned char *buf){
-    int state = 0;
-    int n=0;
-    
+int state_machine(unsigned char *buf, int n, int state){
     switch (state)
     {
     case 0: //start
@@ -44,4 +41,6 @@ int state_machine(unsigned char *buf){
         return 0;
         break;
     }
+
+    return 0;
 }

@@ -23,6 +23,45 @@
 
 volatile int STOP = FALSE;
 
+int state_machine(unsigned char *buf, int n, int state){
+    switch (state)
+    {
+    case 0: //start
+        if (buf[n] == 'f') return 1;
+        break;
+    case 1: //flag
+        if (buf[n] == 'a') return 2;
+        else if (buf[n] != 'f') return 0;
+        break;
+
+    case 2: //a
+        if(buf[n] == 'c') return 3;
+        else if (buf[n] == 'f') return 1;
+        else return 0;
+        break;
+
+    case 3: //c
+        if (buf[n] == 'b') return 4;
+        else if ( buf[n] == 'f') return 1;
+        return 0;
+        break;
+
+    case 4: //bcc
+        if(buf[n] == 'f') return 5;
+        return 0;
+        break;
+
+    case 5: //stop
+        return 6;
+        break;
+    
+    default:
+        return 0;
+        break;
+    }
+
+}
+
 int main(int argc, char *argv[])
 {
     // Program usage: Uses either COM1 or COM2
@@ -107,6 +146,16 @@ int main(int argc, char *argv[])
         n++;
     }
     printf("%s \n",buf);
+    int state =0;
+    int number = 0;
+    while (number < n){
+        state = state_machine(buf,number,state);
+        number++;
+        if (state == 6) break;
+    }
+
+    printf("%d \n",state);
+    
     sleep(0.5);
 
     int bytes = write(fd, buf, n);
